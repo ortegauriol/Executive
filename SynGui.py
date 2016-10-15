@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'synergiesGUI.ui'
 #
-# Created: Fri Oct 14 12:52:03 2016
+# Created: Sat Oct 15 21:38:09 2016
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,6 +13,15 @@ class Ui_SynergiesGUI(object):
     def setupUi(self, SynergiesGUI):
         SynergiesGUI.setObjectName("SynergiesGUI")
         SynergiesGUI.resize(856, 726)
+        SynergiesGUI.setStyleSheet("void MainWindow::closeEvent(QCloseEvent *event)  // show prompt when user wants to close app\n"
+"{\n"
+"    event->ignore();\n"
+"    if (QMessageBox::Yes == QMessageBox::question(this, \"Close Confirmation\", \"Exit?\", QMessageBox::Yes | QMessageBox::No))\n"
+"    {\n"
+"        event->accept();\n"
+"    }\n"
+"\n"
+"}")
         self.centralwidget = QtGui.QWidget(SynergiesGUI)
         self.centralwidget.setObjectName("centralwidget")
         self.groupBox = QtGui.QGroupBox(self.centralwidget)
@@ -20,29 +29,48 @@ class Ui_SynergiesGUI(object):
         self.groupBox.setTitle("")
         self.groupBox.setObjectName("groupBox")
         self.lineEdit = QtGui.QLineEdit(self.groupBox)
-        self.lineEdit.setGeometry(QtCore.QRect(30, 80, 121, 31))
-
+        self.lineEdit.setGeometry(QtCore.QRect(40, 60, 121, 31))
+        self.lineEdit.setStyleSheet("QLineEdit\n"
+"{\n"
+"text-color: rgb(206, 206, 206)\n"
+"}")
         self.lineEdit.setObjectName("lineEdit")
         self.lineEdit_2 = QtGui.QLineEdit(self.groupBox)
-        self.lineEdit_2.setGeometry(QtCore.QRect(190, 80, 121, 31))
+        self.lineEdit_2.setGeometry(QtCore.QRect(200, 60, 121, 31))
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.lineEdit_3 = QtGui.QLineEdit(self.groupBox)
-        self.lineEdit_3.setGeometry(QtCore.QRect(30, 140, 121, 31))
+        self.lineEdit_3.setGeometry(QtCore.QRect(40, 120, 121, 31))
         self.lineEdit_3.setObjectName("lineEdit_3")
         self.lineEdit_4 = QtGui.QLineEdit(self.groupBox)
-        self.lineEdit_4.setGeometry(QtCore.QRect(190, 140, 121, 31))
+        self.lineEdit_4.setGeometry(QtCore.QRect(200, 120, 121, 31))
         self.lineEdit_4.setObjectName("lineEdit_4")
-        self.lineEdit_5 = QtGui.QLineEdit('Max_',self.groupBox)
-        self.lineEdit_5.setGeometry(QtCore.QRect(30, 200, 121, 31))
+        self.lineEdit_5 = QtGui.QLineEdit(self.groupBox)
+        self.lineEdit_5.setGeometry(QtCore.QRect(40, 180, 121, 31))
         self.lineEdit_5.setObjectName("lineEdit_5")
         self.lineEdit_6 = QtGui.QLineEdit(self.groupBox)
-        self.lineEdit_6.setGeometry(QtCore.QRect(190, 200, 121, 31))
+        self.lineEdit_6.setGeometry(QtCore.QRect(200, 180, 121, 31))
         self.lineEdit_6.setObjectName("lineEdit_6")
         self.label = QtGui.QLabel(self.groupBox)
         self.label.setGeometry(QtCore.QRect(0, 10, 371, 31))
         self.label.setTextFormat(QtCore.Qt.RichText)
         self.label.setWordWrap(True)
         self.label.setObjectName("label")
+        self.connectButton_5 = QtGui.QToolButton(self.groupBox)
+        self.connectButton_5.setGeometry(QtCore.QRect(210, 230, 101, 31))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(10)
+        font.setWeight(75)
+        font.setBold(True)
+        self.connectButton_5.setFont(font)
+        self.connectButton_5.setStyleSheet("QToolButton:checked {\n"
+"\n"
+"background-color: rgb(0, 170, 0);\n"
+"\n"
+"}")
+        self.connectButton_5.setCheckable(False)
+        self.connectButton_5.setChecked(False)
+        self.connectButton_5.setObjectName("connectButton_5")
         self.groupBox_2 = QtGui.QGroupBox(self.centralwidget)
         self.groupBox_2.setGeometry(QtCore.QRect(440, 20, 401, 361))
         self.groupBox_2.setTitle("")
@@ -70,6 +98,7 @@ class Ui_SynergiesGUI(object):
         self.define_Button = QtGui.QToolButton(self.frame)
         self.define_Button.setGeometry(QtCore.QRect(170, 50, 71, 61))
         self.define_Button.setCheckable(True)
+        self.define_Button.setChecked(True)
         self.define_Button.setAutoExclusive(True)
         self.define_Button.setObjectName("define_Button")
         self.stackedWidget = QtGui.QStackedWidget(self.groupBox_2)
@@ -132,7 +161,7 @@ class Ui_SynergiesGUI(object):
         self.splitter.setOrientation(QtCore.Qt.Vertical)
         self.splitter.setObjectName("splitter")
         self.frame_2 = QtGui.QFrame(self.centralwidget)
-        self.frame_2.setGeometry(QtCore.QRect(490, 410, 301, 231))
+        self.frame_2.setGeometry(QtCore.QRect(500, 400, 301, 231))
         self.frame_2.setFrameShape(QtGui.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtGui.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
@@ -158,7 +187,7 @@ class Ui_SynergiesGUI(object):
         self.trialNumber.setDigitCount(2)
         self.trialNumber.setObjectName("trialNumber")
         self.connectButton = QtGui.QToolButton(self.centralwidget)
-        self.connectButton.setGeometry(QtCore.QRect(30, 30, 341, 61))
+        self.connectButton.setGeometry(QtCore.QRect(30, 30, 161, 61))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(14)
@@ -174,11 +203,11 @@ class Ui_SynergiesGUI(object):
         self.connectButton.setChecked(False)
         self.connectButton.setObjectName("connectButton")
         self.groupBox_3 = QtGui.QGroupBox(self.centralwidget)
-        self.groupBox_3.setGeometry(QtCore.QRect(20, 410, 371, 251))
+        self.groupBox_3.setGeometry(QtCore.QRect(20, 400, 371, 251))
         self.groupBox_3.setTitle("")
         self.groupBox_3.setObjectName("groupBox_3")
         self.label_4 = QtGui.QLabel(self.groupBox_3)
-        self.label_4.setGeometry(QtCore.QRect(20, 190, 201, 41))
+        self.label_4.setGeometry(QtCore.QRect(20, 200, 331, 41))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(16)
@@ -186,24 +215,67 @@ class Ui_SynergiesGUI(object):
         font.setBold(True)
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
-        self.label_5 = QtGui.QLabel(self.groupBox_3)
-        self.label_5.setGeometry(QtCore.QRect(20, 100, 201, 41))
+        self.textEdit = QtGui.QTextEdit(self.groupBox_3)
+        self.textEdit.setGeometry(QtCore.QRect(20, 40, 311, 141))
+        # self.textEdit.setSizeAdjustPolicy(QtGui.QAbstractScrollArea.AdjustToContents)
+        self.textEdit.setObjectName("textEdit")
+        self.connectButton_2 = QtGui.QToolButton(self.centralwidget)
+        self.connectButton_2.setGeometry(QtCore.QRect(220, 70, 141, 31))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(12)
         font.setWeight(75)
         font.setBold(True)
-        self.label_5.setFont(font)
-        self.label_5.setObjectName("label_5")
-        self.label_6 = QtGui.QLabel(self.groupBox_3)
-        self.label_6.setGeometry(QtCore.QRect(20, 40, 201, 41))
+        self.connectButton_2.setFont(font)
+        self.connectButton_2.setStyleSheet("QToolButton:checked {\n"
+"\n"
+"background-color: rgb(0, 170, 0);\n"
+"\n"
+"}")
+        self.connectButton_2.setCheckable(False)
+        self.connectButton_2.setChecked(False)
+        self.connectButton_2.setObjectName("connectButton_2")
+        self.label_Python_console = QtGui.QLabel(self.centralwidget)
+        self.label_Python_console.setGeometry(QtCore.QRect(20, 660, 391, 21))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(12)
         font.setWeight(75)
         font.setBold(True)
-        self.label_6.setFont(font)
-        self.label_6.setObjectName("label_6")
+        self.label_Python_console.setFont(font)
+        self.label_Python_console.setObjectName("label_Python_console")
+        self.connectButton_4 = QtGui.QToolButton(self.centralwidget)
+        self.connectButton_4.setGeometry(QtCore.QRect(220, 20, 141, 31))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(12)
+        font.setWeight(75)
+        font.setBold(True)
+        self.connectButton_4.setFont(font)
+        self.connectButton_4.setStyleSheet("QToolButton:checked {\n"
+"\n"
+"background-color: rgb(0, 170, 0);\n"
+"\n"
+"}")
+        self.connectButton_4.setCheckable(False)
+        self.connectButton_4.setChecked(False)
+        self.connectButton_4.setObjectName("connectButton_4")
+        self.connectButton_3 = QtGui.QToolButton(self.centralwidget)
+        self.connectButton_3.setGeometry(QtCore.QRect(610, 650, 101, 31))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(10)
+        font.setWeight(75)
+        font.setBold(True)
+        self.connectButton_3.setFont(font)
+        self.connectButton_3.setStyleSheet("QToolButton:checked {\n"
+"\n"
+"background-color: rgb(0, 170, 0);\n"
+"\n"
+"}")
+        self.connectButton_3.setCheckable(False)
+        self.connectButton_3.setChecked(False)
+        self.connectButton_3.setObjectName("connectButton_3")
         SynergiesGUI.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(SynergiesGUI)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 856, 21))
@@ -223,7 +295,7 @@ class Ui_SynergiesGUI(object):
         self.menubar.addAction(self.menuAbout.menuAction())
 
         self.retranslateUi(SynergiesGUI)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(SynergiesGUI)
         SynergiesGUI.setTabOrder(self.VR_Button, self.UR5_Button)
         SynergiesGUI.setTabOrder(self.UR5_Button, self.define_Button)
@@ -243,8 +315,11 @@ class Ui_SynergiesGUI(object):
         self.lineEdit.setText(QtGui.QApplication.translate("SynergiesGUI", "Age", None, QtGui.QApplication.UnicodeUTF8))
         self.lineEdit_2.setText(QtGui.QApplication.translate("SynergiesGUI", "Height", None, QtGui.QApplication.UnicodeUTF8))
         self.lineEdit_3.setText(QtGui.QApplication.translate("SynergiesGUI", "Weight", None, QtGui.QApplication.UnicodeUTF8))
-        self.lineEdit_6.setText(QtGui.QApplication.translate("SynergiesGUI", "Arm_Length", None, QtGui.QApplication.UnicodeUTF8))
+        self.lineEdit_4.setText(QtGui.QApplication.translate("SynergiesGUI", "Arm_Length", None, QtGui.QApplication.UnicodeUTF8))
+        self.lineEdit_5.setText(QtGui.QApplication.translate("SynergiesGUI", "Max_Force", None, QtGui.QApplication.UnicodeUTF8))
+        self.lineEdit_6.setText(QtGui.QApplication.translate("SynergiesGUI", "Force_%", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("SynergiesGUI", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">Experiment Data Input</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.connectButton_5.setText(QtGui.QApplication.translate("SynergiesGUI", "SAVE", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("SynergiesGUI", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">Target Controller</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.VR_Button.setText(QtGui.QApplication.translate("SynergiesGUI", "VR Target", None, QtGui.QApplication.UnicodeUTF8))
         self.UR5_Button.setText(QtGui.QApplication.translate("SynergiesGUI", "UR5", None, QtGui.QApplication.UnicodeUTF8))
@@ -263,8 +338,15 @@ class Ui_SynergiesGUI(object):
         self.stop_Button_4.setText(QtGui.QApplication.translate("SynergiesGUI", "STOP", None, QtGui.QApplication.UnicodeUTF8))
         self.connectButton.setText(QtGui.QApplication.translate("SynergiesGUI", "CONNECT", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("SynergiesGUI", "DATE", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_5.setText(QtGui.QApplication.translate("SynergiesGUI", "File Output", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_6.setText(QtGui.QApplication.translate("SynergiesGUI", "Last Action ", None, QtGui.QApplication.UnicodeUTF8))
+        self.textEdit.setHtml(QtGui.QApplication.translate("SynergiesGUI", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Experiment Notes</p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        self.connectButton_2.setText(QtGui.QApplication.translate("SynergiesGUI", "Select DIR", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_Python_console.setText(QtGui.QApplication.translate("SynergiesGUI", "Python Console Output", None, QtGui.QApplication.UnicodeUTF8))
+        self.connectButton_4.setText(QtGui.QApplication.translate("SynergiesGUI", "Load Config", None, QtGui.QApplication.UnicodeUTF8))
+        self.connectButton_3.setText(QtGui.QApplication.translate("SynergiesGUI", "EXIT", None, QtGui.QApplication.UnicodeUTF8))
         self.menuAbout.setTitle(QtGui.QApplication.translate("SynergiesGUI", "About", None, QtGui.QApplication.UnicodeUTF8))
         self.actionLicense.setText(QtGui.QApplication.translate("SynergiesGUI", "License", None, QtGui.QApplication.UnicodeUTF8))
         self.actionContact.setText(QtGui.QApplication.translate("SynergiesGUI", "Contact", None, QtGui.QApplication.UnicodeUTF8))
