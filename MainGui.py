@@ -7,6 +7,7 @@ from ConfigParser import SafeConfigParser
 import Dragonfly_config as rc
 from PyDragonfly import Dragonfly_Module, CMessage, copy_to_msg,copy_from_msg
 import datetime
+from random import shuffle
 
 import SynGui
 
@@ -22,6 +23,8 @@ class synergiesGUI(QMainWindow, SynGui.Ui_SynergiesGUI):
         self.connectButton.clicked.connect(self.check_host)
         self.ConnectHost = ConnectThread()
 
+
+
         # Widget Controller
         self.define_Button.clicked.connect(self.changePage)
         self.UR5_Button.clicked.connect(self.changePage)
@@ -33,10 +36,14 @@ class synergiesGUI(QMainWindow, SynGui.Ui_SynergiesGUI):
         #VR Feedback Buttons
         self.VRNextButton.clicked.connect(self.vr_command)
 
+        #Define Buttons
+        self.coordinates, self.order = generate_coordinates()
+        self.genCoorButton.clicked.connect(self.coordinates, self.order)
 
         #LABELS
         now = datetime.datetime.now()
         self.label_4.setText(now.strftime("%Y-%m-%d %H:%M"))
+
 
     # Button methods
 
@@ -95,6 +102,14 @@ class synergiesGUI(QMainWindow, SynGui.Ui_SynergiesGUI):
             mod.DisconnectFromMMM()
         else:
             print 'Check Connect Button'
+
+    def generate_coordinates(self):
+        coordinates = list(it.product([-1, 0, 1], repeat=3))
+        a = range(0, len(coordinates))
+        key = ['pos_%s' % s for s in a]
+        target = dict(zip(key, coordinates))
+        random.shuffle(key)
+        return target, key
 
 
 
