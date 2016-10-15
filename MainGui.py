@@ -7,22 +7,27 @@ from ConfigParser import SafeConfigParser
 import Dragonfly_config as rc
 from PyDragonfly import Dragonfly_Module, CMessage, copy_to_msg,copy_from_msg
 import datetime
-from random import shuffle
+import itertools as it
+import random
 
 import SynGui
 
 
 class synergiesGUI(QMainWindow, SynGui.Ui_SynergiesGUI):
     # Constructor method
+    conSignal = Signal(str)
 
     def __init__(self, parent=None):
         super(synergiesGUI, self).__init__(parent)
         self.setupUi(self)
+        self.index = 0
+        self.dir = "C:\Users\amcmorl\Documents\BCI\data\Synergies"
+
 
         # Button actions block
         self.connectButton.clicked.connect(self.check_host)
         self.ConnectHost = ConnectThread()
-
+        self.connectButton_2.clicked.connect(self.select_dir)
 
 
         # Widget Controller
@@ -37,13 +42,17 @@ class synergiesGUI(QMainWindow, SynGui.Ui_SynergiesGUI):
         self.VRNextButton.clicked.connect(self.vr_command)
 
         #Define Buttons
-        self.coordinates, self.order = generate_coordinates()
-        self.genCoorButton.clicked.connect(self.coordinates, self.order)
+        self.genCoorButton.clicked.connect(self.generate_coordinates)
 
         #LABELS
         now = datetime.datetime.now()
         self.label_4.setText(now.strftime("%Y-%m-%d %H:%M"))
+        self.conSignal.connect(self.console)
 
+
+        #Implement method to prevent easy close of the window without saving data.
+        # app.aboutToQuit()
+        # app.aboutToQuit.connect(myExitHandler)  # myExitHandler is a callable
 
     # Button methods
 
@@ -54,6 +63,11 @@ class synergiesGUI(QMainWindow, SynGui.Ui_SynergiesGUI):
         else:
             self.ConnectHost.terminate()
 
+    def select_dir(self):
+        selected_directory = QFileDialog.getExistingDirectory()
+        self.dir = selected_directory
+        self.conSignal.emit(self.dir)
+
     # Target Controller Widget
     def changePage(self):
         if self.define_Button.isChecked():
@@ -63,7 +77,7 @@ class synergiesGUI(QMainWindow, SynGui.Ui_SynergiesGUI):
         elif self.UR5_Button.isChecked():
             self.stackedWidget.setCurrentIndex(2)
 
-    #UR5
+    # UR5
     def ur5_command(self):
         # momentary commands to see that it works
         msg = CMessage(rc.MT_UR5_MOVEMENT_COMMAND)
@@ -83,16 +97,18 @@ class synergiesGUI(QMainWindow, SynGui.Ui_SynergiesGUI):
         else:
             print 'Check Connect Button'
 
+    # VR_FEEDBACK
     def vr_command(self):
-        # momentary commands to see that it works
+        target = self.target[self.order[self.index]]
+        self.index += 1
         msg = CMessage(rc.MT_RTFT_CONFIG)
         mdf = rc.MDF_RTFT_CONFIG()
-        target = [5, 10, -2]
         mdf.target_vector[:] = target[:]
         mdf.cursor_visible = True
         mdf.target_visible = True
-        mdf.max_factor = 40
-        copy_to_msg(mdf,msg)
+        mdf.max_factor = 40  # Change this
+        copy_to_msg(mdf, msg)
+        print target, self.index
         if self.connectButton.isChecked():
             mod = Dragonfly_Module(0, 0)
             mod.ConnectToMMM(('localhost:7111'))
@@ -107,11 +123,16 @@ class synergiesGUI(QMainWindow, SynGui.Ui_SynergiesGUI):
         coordinates = list(it.product([-1, 0, 1], repeat=3))
         a = range(0, len(coordinates))
         key = ['pos_%s' % s for s in a]
-        target = dict(zip(key, coordinates))
+        self.target = dict(zip(key, coordinates))
         random.shuffle(key)
-        return target, key
+        self.order = key
+        for i in self.order: print i
+        print self.target
 
-
+    # LABELS
+    def console(self, var):
+        str(var)
+        self.label_Python_console.setText(var)
 
 
 class ConnectThread(QThread):
@@ -128,7 +149,6 @@ class ConnectThread(QThread):
         mod = Dragonfly_Module(0,0)
         mod.DisconnectFromMMM()
         print 'Disconnected'
-
 
 
 app = QApplication(sys.argv)
